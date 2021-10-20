@@ -1,0 +1,47 @@
+<div class="row mt-5 mb-3">
+    <div class=" fw-bolder col-3 p-0 pt-2"> Total Saved Speeches: {{savedSpeeches.length}}
+    </div>
+    <div class="col-2">
+        <button *ngIf="savedSpeeches.length" class="btn btn-danger " (click)="emptySavedSpeeches()"> remove all <i
+                class="fas fa-trash-alt"></i>
+        </button>
+
+    </div>
+</div>
+<table class="table table-hover " *ngIf="savedSpeeches.length">
+    <thead>
+        <tr>
+            <th scope="col">Text To Speech</th>
+            <th scope="col">Voice & Language</th>
+            <th scope="col">Play</th>
+            <th scope="col">Pause</th>
+            <th scope="col">Resume</th>
+            <th scope="col">Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr [id]="i" *ngFor="let speech of savedSpeeches;let i =index"
+            [ngStyle]="{'border': highlightedSpeech===i? 'red 1px solid' :'lightgrey'}">
+
+            <td scope="col">
+                {{speech.text}}</td>
+            <td>{{speech.voice.name}}</td>
+            <td scope="col">
+                <button (click)="speak(speech)" class="btn btn-sm btn-primary"> Play <i
+                        class="fas fa-play"></i></button>
+            </td>
+            <td scope="col">
+                <button type="button" class="btn btn-sm btn-warning" (click)="pause()">Pause <i
+                        class="fas fa-pause "></i></button>
+            </td>
+            <td scope="col">
+                <button type="button" class="btn btn-sm btn-success" (click)="resume()">Resume <i
+                        class="fas fa-stop"></i></button>
+            </td>
+            <td scope="col">
+                <button class="btn btn-sm btn-danger " (click)="remove(i)"> Remove <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

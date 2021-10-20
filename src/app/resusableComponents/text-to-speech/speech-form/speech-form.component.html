@@ -1,0 +1,48 @@
+<div>
+    <form [formGroup]="textToSpeech" (ngSubmit)="saveSpeech()" class="row">
+        <div class="form-group mb-3 col-6">
+            <label for="" class="mt-4">
+                Text To Speech
+                <small class="text-danger" *ngIf="(textToSpeech.controls['text'].touched &&
+             (textToSpeech.controls['text'].errors?textToSpeech.controls['text'].errors.required:false))">
+                    (Required)</small>
+
+                <small class="text-danger" *ngIf="maxlengthErr">
+                    (text shouldn't exceed 50 letters)</small>
+            </label>
+            <textarea [ngStyle]="{border: (maxlengthErr || (textToSpeech.controls['text'].touched &&
+            (textToSpeech.controls['text'].errors?textToSpeech.controls['text'].errors.required:false)) 
+            )? 'solid 2px red':'solid lightgrey 1px'}" (ngModelChange)="inputUpdate()" cols="15" rows="2" type="text"
+                class="form-control" formControlName="text" id="tts" aria-describedby="emailHelp">
+             </textarea>
+        </div>
+        <div class="form-group mb-3 col-6 ">
+
+            <label for="" class="mt-4">
+                Voices & Languages <small class="text-danger" *ngIf="(textToSpeech.controls['voice'].touched &&
+                (textToSpeech.controls['voice'].errors?textToSpeech.controls['voice'].errors.required:false))">
+                    (Required)</small>
+
+            </label>
+            <select required [ngStyle]="{border: (textToSpeech.controls['voice'].touched &&
+            (textToSpeech.controls['voice'].errors?textToSpeech.controls['voice'].errors.required:false))
+                ? 'solid 2px red':'solid lightgrey 1px'}" formControlName="voice" class="form-select "
+                aria-label="Default select example">
+                <option selected hidden>Voices & Languages</option>
+                <option *ngFor="let voice of availableVoices" [value]="voice.name">{{voice.name}}</option>
+            </select>
+
+            <div class="btn-group mt-4 " role="group" aria-label="Basic mixed styles example">
+                <button type="button" [disabled]="textToSpeech.invalid" class="btn btn-secondary"
+                    (click)="resume()">Resume <i class="fas fa-stop"></i></button>
+                <button (click)="speak()" type="button" [disabled]="textToSpeech.invalid" class="btn btn-primary"> Play
+                    <i class="fas fa-play"></i></button>
+                <button type="button" class="btn btn-warning" [disabled]="textToSpeech.invalid" (click)="pause()">Pause
+                    <i class="fas fa-pause"></i></button>
+                <button type="submit" class="btn btn-success" [disabled]="textToSpeech.invalid">Save <i
+                        class="far fa-plus"></i> </button>
+            </div>
+        </div>
+
+    </form>
+</div>
